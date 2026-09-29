@@ -39,6 +39,7 @@ DeepSeek Harness（DSH）的一个客户端插件：把一份 Agent 预设画成
 - **自动跟随不要依赖整个 layout。** 依赖运行节点的 id 即可，否则任何布局变化（折叠、数据刷新）都会把用户视线拽走。
 - **`tool/result` 事件经常不带 `callId`。** 配对耗时必须回退到"最早一个未完成的调用"，否则所有调用都会被算成"进行中"。
 - **`conversation.view` 的注册项本身就是标签**：`id` + `label`，`order` 决定它排在「对话」「轨迹」之后的位置。
+- **`files` 白名单漏文件，只在 git 安装时才暴露。** `link:` 安装是软链整个目录，少文件看不出来；`git+https` 安装按 `files` 打包，漏掉 `cordis.patch.yml` 会让 DSH 直接拒绝安装（`failed to read overlay ... ENOENT`）。以后新增运行时要读的文件，必须同步加进 `files`。
 
 ## DSH Plugin 收录要求
 
@@ -50,4 +51,6 @@ DeepSeek Harness（DSH）的一个客户端插件：把一份 Agent 预设画成
 
 ## 发布
 
-`package.json` 里的 `repository.url` 目前是 `OWNER` 占位，发布前替换成真实仓库地址。`private: true` 保留即可（不发布到 npm）。
+`repository.url` 指向 `github.com/laojingwei/agent-preset-graph-xww`。`private: true` 保留即可（不发布到 npm）。
+
+改动 `files`、或新增任何运行时要读的文件之后，按上面「踩过的坑」里那条复核白名单 —— 只有 git 安装路径会暴露白名单问题，本地 `link:` 安装永远看不出来。

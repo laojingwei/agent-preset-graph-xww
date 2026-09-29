@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OWNER/agent-preset-graph-xww.git"
+    "url": "git+https://github.com/laojingwei/agent-preset-graph-xww.git"
   },
   "exports": {
     ".": "./index.js",
@@ -30,6 +30,7 @@
   "files": [
     "index.js",
     "client.js",
+    "cordis.patch.yml",
     "icon.svg",
     "README.md",
     "README.en.md",

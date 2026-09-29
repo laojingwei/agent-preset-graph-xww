@@ -84,7 +84,7 @@ Before it is published to npm, point at the repository or a local working copy:
 
 ```bash
 # from the GitHub repository
-dsh plugin --profile web add github:OWNER/agent-preset-graph-xww
+dsh plugin --profile web add github:laojingwei/agent-preset-graph-xww
 
 # a local working copy (edit client.js and refresh — no reinstall needed)
 dsh plugin --profile web add link:D:/path/to/agent-preset-graph-xww
@@ -98,7 +98,7 @@ Edit `package.json` inside your profile directory (`$DSH_HOME/profiles/<name>/`)
 ```json
 {
   "dependencies": {
-    "agent-preset-graph-xww": "github:OWNER/agent-preset-graph-xww"
+    "agent-preset-graph-xww": "github:laojingwei/agent-preset-graph-xww"
   },
   "dsh": {
     "profile": {

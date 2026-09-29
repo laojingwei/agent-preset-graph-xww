@@ -84,7 +84,7 @@ dsh plugin --profile web add agent-preset-graph-xww
 
 ```bash
 # 从 GitHub 仓库安装
-dsh plugin --profile web add github:OWNER/agent-preset-graph-xww
+dsh plugin --profile web add github:laojingwei/agent-preset-graph-xww
 
 # 本地工作副本（改完 client.js 刷新页面即可，不需要重新安装）
 dsh plugin --profile web add link:D:/path/to/agent-preset-graph-xww
@@ -98,7 +98,7 @@ dsh plugin --profile web add link:D:/path/to/agent-preset-graph-xww
 ```json
 {
   "dependencies": {
-    "agent-preset-graph-xww": "github:OWNER/agent-preset-graph-xww"
+    "agent-preset-graph-xww": "github:laojingwei/agent-preset-graph-xww"
   },
   "dsh": {
     "profile": {
