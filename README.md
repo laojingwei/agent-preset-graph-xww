@@ -126,6 +126,34 @@ dsh plugin --profile web remove agent-preset-graph-xww
 
 ---
 
+## 权限与兼容性
+
+**它读什么**
+
+| 数据 | 用途 |
+|---|---|
+| `remote.pluginInventory.list()` | 预设的插件清单，以及这个部署装载的全部插件 |
+| `ctx.sessions`（快照 + 事件窗口） | 哪个会话在运行、它用的是哪份预设、正在执行哪个工具 |
+| `ctx.locale` | 界面文案与内置预设名 |
+
+**它不做什么**
+
+- 不修改任何 Host 状态、不写配置文件、不注册工具、不注入提示词
+- 不发起网络请求、不读取工作区文件、不执行命令
+- Host 半边（`index.js`）只导出 `apply(ctx)`，本身没有任何行为
+- 所有数据都经既有服务读取，不落盘、不外传
+
+**兼容性**
+
+| | |
+|---|---|
+| DeepSeek Harness | ≥ `0.1.7-rc.2`（开发与验证所用版本） |
+| 平台 | Web（DSH Web GUI） |
+| 依赖的客户端服务 | `slots`、`locale`、`sessions`、`remote.pluginInventory`；缺少任一服务时插件不激活，不会影响 DSH 启动 |
+| 需要的配置 | 无 |
+
+支持的安装方式见上一节：profile 为 `web`。
+
 ## 它是怎么做到的
 
 插件是纯客户端（browser half）的，**不依赖任何构建步骤**，也不 import 任何 Harness 客户端包。所有数据都来自 DSH 已经暴露的服务：

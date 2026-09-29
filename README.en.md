@@ -126,6 +126,34 @@ Or remove the entry from both `dependencies` and `dsh.profile.bundles`, then `pn
 
 ---
 
+## Permissions & compatibility
+
+**What it reads**
+
+| Data | Why |
+|---|---|
+| `remote.pluginInventory.list()` | the preset's plugin rows, plus every plugin this profile mounts |
+| `ctx.sessions` (snapshot + event window) | which session is running, which preset it uses, which tool is executing |
+| `ctx.locale` | interface copy and shipped preset names |
+
+**What it never does**
+
+- No Host state is modified, no config file is written, no tool is registered, no prompt text is injected
+- No network requests, no workspace file reads, no command execution
+- The Host half (`index.js`) only exports `apply(ctx)` and has no behaviour of its own
+- Everything is read through existing services; nothing is persisted or sent anywhere
+
+**Compatibility**
+
+| | |
+|---|---|
+| DeepSeek Harness | ≥ `0.1.7-rc.2` (the version it was developed and verified against) |
+| Platform | Web (the DSH Web GUI) |
+| Client services it needs | `slots`, `locale`, `sessions`, `remote.pluginInventory`; if any is missing the plugin simply does not activate and DSH still starts |
+| Configuration required | none |
+
+Install with profile `web`, as shown in the previous section.
+
 ## How it works
 
 The plugin is client-only (browser half), has **no build step**, and imports no Harness client package. Everything comes from services DSH already exposes:
