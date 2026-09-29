@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+pnpm-lock.yaml
+
+# Local harness link used while developing
+.dsh-harness/
+
+# Logs and editor noise
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

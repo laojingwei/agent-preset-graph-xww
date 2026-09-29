@@ -1,0 +1,55 @@
+{
+  "name": "agent-preset-graph-xww",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Live node-graph view of what an Agent preset is made of, drawn as a DSH conversation view.",
+  "license": "MIT",
+  "icon": "./icon.svg",
+  "meta": {
+    "title": "预设节点图",
+    "description": "以 ComfyUI 式节点图展示 Agent 预设的组成，并实时高亮正在执行的节点。"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "agent-preset",
+    "node-graph",
+    "visualization",
+    "plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/agent-preset-graph-xww.git"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "icon.svg",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-settings"
+      ]
+    }
+  }
+}
