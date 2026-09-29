@@ -2,6 +2,7 @@
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-plugin-4c8dff.svg)](https://github.com/deepseek-ai)
+[![topic: dsh-plugin](https://img.shields.io/badge/topic-dsh--plugin-blue.svg)](https://github.com/topics/dsh-plugin)
 
 把 **Agent 预设**画成一张 ComfyUI 风格的节点图，并实时高亮这个 Agent 此刻跑在哪一个节点上。
 
@@ -73,7 +74,26 @@ DeepSeek Harness 的「预设」本质上是一份插件清单 —— 它决定�
 
 ## 安装
 
-插件装在 DSH 的 **profile** 里。编辑你的 profile 目录（`$DSH_HOME/profiles/<name>/`）下的 `package.json`：
+```bash
+dsh plugin --profile web add agent-preset-graph-xww
+```
+
+`--profile` 后面换成你自己的 profile 名（没有多个 profile 时就是 `web`）。这条命令会把插件写进该 profile 的依赖与 bundle 列表，重启 DSH 后生效。
+
+还没发布到 npm 时，直接指向仓库或本地工作副本：
+
+```bash
+# 从 GitHub 仓库安装
+dsh plugin --profile web add github:OWNER/agent-preset-graph-xww
+
+# 本地工作副本（改完 client.js 刷新页面即可，不需要重新安装）
+dsh plugin --profile web add link:D:/path/to/agent-preset-graph-xww
+```
+
+<details>
+<summary>手动安装（等价的配置文件写法）</summary>
+
+编辑 profile 目录（`$DSH_HOME/profiles/<name>/`）下的 `package.json`：
 
 ```json
 {
@@ -94,15 +114,15 @@ DeepSeek Harness 的「预设」本质上是一份插件清单 —— 它决定�
 
 然后在 profile 目录执行 `pnpm install`，重启 DSH。
 
-本地开发可以直接指向工作副本：
-
-```json
-"agent-preset-graph-xww": "link:D:/path/to/agent-preset-graph-xww"
-```
+</details>
 
 ### 卸载
 
-从 `dependencies` 和 `dsh.profile.bundles` 里删掉这一项，再 `pnpm install` 即可。
+```bash
+dsh plugin --profile web remove agent-preset-graph-xww
+```
+
+也可以直接从 `dependencies` 和 `dsh.profile.bundles` 里删掉这一项，再 `pnpm install`。
 
 ---
 
@@ -140,7 +160,7 @@ node --check client.js     # 唯一的检查
 ```
 
 - `client.js` —— 全部实现：图构建、布局、实时状态、渲染、导出
-- `index.js` —— Host 半边，只提供一个 Loader 行，无行为
+- `index.js` —— Host 半边，按 DSH Plugin 规范导出 `apply(ctx)`；本插件没有 Host 侧行为
 - `cordis.patch.yml` —— 把这个 bundle 挂进 Loader
 
 ## 许可

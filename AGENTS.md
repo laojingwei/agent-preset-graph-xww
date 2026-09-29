@@ -11,7 +11,7 @@ DeepSeek Harness（DSH）的一个客户端插件：把一份 Agent 预设画成
 | 文件 | 作用 |
 |---|---|
 | `client.js` | 全部实现（约 2500 行）。图构建、布局、实时状态、React 渲染、PNG 导出 |
-| `index.js` | Host 半边。只有 `export function apply() {}`，存在的意义是给 bundle 一个 Loader 行 |
+| `index.js` | Host 半边。按规范导出 `apply(ctx)`，本身无行为，存在的意义是给 bundle 一个 Loader 行 |
 | `cordis.patch.yml` | 把 bundle 挂进 Loader |
 | `package.json` | bundle 清单 + `dsh.client` 声明 |
 | `docs/` | README 用的截图 |
@@ -39,6 +39,14 @@ DeepSeek Harness（DSH）的一个客户端插件：把一份 Agent 预设画成
 - **自动跟随不要依赖整个 layout。** 依赖运行节点的 id 即可，否则任何布局变化（折叠、数据刷新）都会把用户视线拽走。
 - **`tool/result` 事件经常不带 `callId`。** 配对耗时必须回退到"最早一个未完成的调用"，否则所有调用都会被算成"进行中"。
 - **`conversation.view` 的注册项本身就是标签**：`id` + `label`，`order` 决定它排在「对话」「轨迹」之后的位置。
+
+## DSH Plugin 收录要求
+
+提交到 DSH Plugin 目录前，这三条必须满足，改动时不要破坏它们：
+
+1. **GitHub topic `dsh-plugin`** —— 在仓库页面 About → Topics 里添加，命令行等价做法是 `gh repo edit --add-topic dsh-plugin`。这是 GitHub 侧的仓库元数据，改代码文件是加不上的，只能手动设。
+2. **README 里要有 `dsh plugin --profile <name> add <包名>` 形式的安装命令** —— 两份 README 的「安装 / Install」章节都已有；改文档时保留它，不要退回成只讲手动编辑 `package.json`。
+3. **导出 `apply(ctx)`** —— `index.js` 必须导出名为 `apply` 的函数且接受 `ctx` 参数。本插件的 Host 半边确实没有行为，但签名要保持规范要求的形式，不要改回无参。
 
 ## 发布
 

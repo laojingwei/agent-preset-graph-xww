@@ -2,6 +2,7 @@
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-plugin-4c8dff.svg)](https://github.com/deepseek-ai)
+[![topic: dsh-plugin](https://img.shields.io/badge/topic-dsh--plugin-blue.svg)](https://github.com/topics/dsh-plugin)
 
 Draws an **Agent preset** as a ComfyUI-style node graph, and highlights live which node the Agent is working through right now.
 
@@ -73,7 +74,26 @@ Toolbar: `Preset · − · + · Fit · Locate · Fold/Expand all · Export · �
 
 ## Install
 
-The plugin installs into a DSH **profile**. Edit `package.json` inside your profile directory (`$DSH_HOME/profiles/<name>/`):
+```bash
+dsh plugin --profile web add agent-preset-graph-xww
+```
+
+Replace `web` with your own profile name if you have more than one. The command writes the plugin into that profile's dependencies and bundle list; restart DSH afterwards.
+
+Before it is published to npm, point at the repository or a local working copy:
+
+```bash
+# from the GitHub repository
+dsh plugin --profile web add github:OWNER/agent-preset-graph-xww
+
+# a local working copy (edit client.js and refresh — no reinstall needed)
+dsh plugin --profile web add link:D:/path/to/agent-preset-graph-xww
+```
+
+<details>
+<summary>Manual install (the equivalent config-file edit)</summary>
+
+Edit `package.json` inside your profile directory (`$DSH_HOME/profiles/<name>/`):
 
 ```json
 {
@@ -94,15 +114,15 @@ The plugin installs into a DSH **profile**. Edit `package.json` inside your prof
 
 Then run `pnpm install` in the profile directory and restart DSH.
 
-For local development, point at a working copy instead:
-
-```json
-"agent-preset-graph-xww": "link:D:/path/to/agent-preset-graph-xww"
-```
+</details>
 
 ### Uninstall
 
-Remove the entry from both `dependencies` and `dsh.profile.bundles`, then `pnpm install`.
+```bash
+dsh plugin --profile web remove agent-preset-graph-xww
+```
+
+Or remove the entry from both `dependencies` and `dsh.profile.bundles`, then `pnpm install`.
 
 ---
 
@@ -140,7 +160,7 @@ node --check client.js     # the only check there is
 ```
 
 - `client.js` — everything: graph building, layout, live state, rendering, export
-- `index.js` — Host half; it only gives the bundle a Loader row
+- `index.js` — Host half; exports `apply(ctx)` as the DSH plugin contract requires, though this plugin has no host-side behaviour
 - `cordis.patch.yml` — mounts the bundle into the Loader
 
 ## License
